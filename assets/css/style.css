@@ -1,0 +1,37 @@
+html, body {
+    height: 100%;
+}
+
+
+body{
+    background-image: url("../images/lum3n-637470-unsplash.jpg");
+    background-size: cover;
+    
+}
+
+.main{
+    background-color:rgba(255,255,255,0.8);
+    padding: 30px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color: #224d17;
+    
+}
+#answerPhoto{
+    background-color:rgba(255,255,255,0.8);
+
+}
+#logo{
+    color: white;
+    /*text-shadow: 2px 2px 4px #000000;*/
+    text-shadow: -1px 0 #224d17, 0 1px #224d17, 1px 0 #224d17, 0 -1px #224d17;
+}
+#logo2{
+    color: #224d17;
+}
+#tempImage{
+    width: 200px;
+    height: auto;
+}
+.logoRow{
+    margin-top: 80px;
+}

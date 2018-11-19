@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Word Guess Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    <script src="/assets/javascript/game.js"></script>
+</head>
+<body onload="newQuestion()">
+
+    <audio id="myAudio">
+        <source src="assets/images/Biting-apple.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="container h-100">
+        <div class="row">
+            <div class="col logoRow">
+                <h1 id="logo" class="text-monospace font-weight-bold"><i class="fas fa-question"></i>  Word Guess Game</h1>
+                <h3 id="logo2" class="text-monospace font-weight-bold">:  <i class="fas fa-apple-alt"></i>  Fruit</h3>
+
+
+            </div>
+        </div>
+        <div class="row h-75">
+            <div class="col-sm-7 my-auto main rounded">
+                <h2 class="text-center text-monospace"><i class="far fa-keyboard"></i>  Press any key to get started!</h2>
+                <br>
+                <br>
+                <br>
+                <p class="text-center text-monospace" id="p-wins"></p>
+                <p class="text-center text-monospace" id="p-underline"></p>
+                <p class="text-center text-monospace" id="p-guessRemaining"></p>
+                <p class="text-center text-monospace" id="p-letterGuessed"></p>
+            </div>
+            <div class="col-sm-1"></div>
+
+            <div class="col-sm-4 main my-auto rounded text-center" id="answerPhoto">
+                <img src="" id="tempImage">
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+    
+    
+    var gameArray = ["banana", "apple", "orange", "mango", "strawberry", "blueberry",
+                    "watermelon", "pineapple", "cherry", "lemon", "kiwi", "peach", 
+                    "grape", "plum", "pear", "coconut"];
+    var underlineArray = [];
+    var underlineOfWord = "";
+    var guessRemaining = 11;
+    var alreadyGuess = [];
+    var computerQ ="";
+    var userGuess ="";
+    var wins = 0;
+    var finalWord="";
+    var loseRemaining = true;
+    var alreadyGuessVar = true;
+    var x = document.getElementById("myAudio"); 
+    var img = document.getElementById("tempImage");
+    img.style.display = 'none';
+
+
+
+    
+    function newQuestion(){
+        computerQ = gameArray[Math.floor(Math.random() * gameArray.length)];
+        underlineArray =[];
+        for(var i =0; i<computerQ.length; i++){
+            underlineArray.push("_");
+        }
+        guessRemaining = 11;
+        alreadyGuess=[];
+        htmlText();
+
+    }
+        
+    function checkwin(){
+        var finalWord = underlineArray.join("");
+        if(computerQ===finalWord){
+            playAudio();
+            alert("You Win !");
+            changeImg();
+            wins++;
+            newQuestion();
+
+        }
+    }
+
+
+    function htmlText(){
+        document.getElementById("p-wins").innerHTML = "WINS : "+wins;
+        document.getElementById("p-underline").innerHTML = underlineArray.join("  ");
+        document.getElementById("p-guessRemaining").innerHTML = "Number of Guesses Remaining : "+ guessRemaining;
+        document.getElementById("p-letterGuessed").innerHTML = "Letters Already Guessed : "+alreadyGuess.join("  ");
+    }
+    
+    function playAudio() { 
+        x.play(); 
+    } 
+
+    function changeImg(){
+        var A = underlineArray.join("");
+        img.style.display = ''; 
+        if(A==="banana"){
+            img.src = "assets/images/banana.png";
+        } else if(A==="apple"){
+            img.src = "assets/images/apple.png";
+        } else if(A==="mango"){
+            img.src = "assets/images/mango.png";
+        } else if(A==="orange"){
+            img.src = "assets/images/orange.png";
+        } else if(A==="strawberry"){
+            img.src = "assets/images/strawberry.png";
+        } else if(A==="blueberry"){
+            img.src = "assets/images/blueberry.png";
+        } else if(A==="watermelon"){
+            img.src = "assets/images/watermelon.png";
+        } else if(A==="pineapple"){
+            img.src = "assets/images/pineapple.png";
+        } else if(A==="cherry"){
+            img.src = "assets/images/cherry.png";
+        } else if(A==="lemon"){
+            img.src = "assets/images/lemon.png";
+        } else if(A==="kiwi"){
+            img.src = "assets/images/kiwi.png";
+        } else if(A==="peach"){
+            img.src = "assets/images/peach.png";
+        } else if(A==="grape"){
+            img.src = "assets/images/grape.png";
+        } else if(A==="plum"){
+            img.src = "assets/images/plum.png";
+        } else if(A==="pear"){
+            img.src = "assets/images/pear.png";
+        } else if(A==="coconut"){
+            img.src = "assets/images/coconut.png";
+        }  
+    }
+
+    
+
+    document.onkeyup = function(event) {
+        loseRemaining = true;
+        alreadyGuessVar = true;
+        var userGuess = event.key.toLowerCase(); 
+  
+
+        
+        
+        if(guessRemaining===1){
+            alert("You Lose");
+            newQuestion();
+            alreadyGuessVar = false;
+        } else{
+            for(var i =0; i<computerQ.length; i++){
+                if(userGuess===computerQ[i]){
+                    underlineArray[i]=userGuess;
+                    loseRemaining = false;
+                    alreadyGuessVar = false;
+                }
+            }
+        }
+        
+        for(var i=0; i<alreadyGuess.length; i++){
+            if(userGuess===alreadyGuess[i]){
+                loseRemaining = false;
+                alreadyGuessVar = false;
+                break;
+            }
+        }
+    
+        if(alreadyGuessVar){
+            alreadyGuess.push(userGuess); 
+
+        }
+        if(loseRemaining){
+            guessRemaining--;
+        }
+
+        
+        checkwin();
+        htmlText();
+    }
+
+    </script>
+    
+</body>
+</html>
