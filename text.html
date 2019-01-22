@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Word Guess Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    <script src="assets/javascript/game.js"></script>
+</head>
+<body>
+
+    <audio id="myAudio">
+        <source src="assets/images/Biting-apple.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="container h-100">
+        <div class="row">
+            <div class="col logoRow">
+                <h1 id="logo" class="text-monospace font-weight-bold"><i class="fas fa-question"></i>  Word Guess Game</h1>
+                <h3 id="logo2" class="text-monospace font-weight-bold">:  <i class="fas fa-apple-alt"></i>  Fruit</h3>
+
+
+            </div>
+        </div>
+        <div class="row h-75">
+            <div class="col-sm-7 my-auto main rounded">
+                <h2 class="text-center text-monospace"><i class="far fa-keyboard"></i>  Press any key to get started!</h2>
+                <br>
+                <br>
+                <br>
+                <p class="text-center text-monospace" id="p-wins"></p>
+                <p class="text-center text-monospace" id="p-underline"></p>
+                <p class="text-center text-monospace" id="p-guessRemaining"></p>
+                <p class="text-center text-monospace" id="p-letterGuessed"></p>
+            </div>
+            <div class="col-sm-1"></div>
+
+            <div class="col-sm-4 main my-auto rounded text-center" id="answerPhoto">
+                <img src="" id="tempImage">
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+    
+    
+    var gameArray = ["banana", "apple", "orange", "mango", "strawberry", "blueberry",
+                    "watermelon", "pineapple", "cherry", "lemon", "kiwi", "peach", 
+                    "grape", "plum", "pear", "coconut"];
+    
+    
+    var img = document.getElementById("tempImage");
+    img.style.display = 'none';
+
+
+
+    
+    var userGuess = "";
+    
+    var wordGuessGame = {
+
+        //Variables
+        underlineArray: [],
+        alreadyGuess: [],
+        computerQ : "",
+        guessRemaining : 11,
+        audio : document.getElementById("myAudio"), 
+        wins: 0,
+
+        //game words sets
+        words : [
+            {
+                name: "banana",
+                img : "banana.png"
+            }, 
+            {
+                name: "apple",
+                img : "apple.png"
+            }
+        ], 
+        
+        //new Question
+        gameStart: function(){
+            var randomNumber = Math.floor(Math.random() * wordGuessGame.words.length);
+            computerQ = wordGuessGame.words[randomNumber].name;
+            console.log(computerQ);
+            for(var i=0; i< computerQ.length; i++){
+                wordGuessGame.underlineArray.push("_");
+            }
+            wordGuessGame.guessRemaining = 11;
+            wordGuessGame.htmlText();
+        },
+
+        //update variables on web
+        htmlText: function(){
+            document.getElementById("p-wins").innerHTML = "WINS : "+wordGuessGame.wins;
+            document.getElementById("p-underline").innerHTML = wordGuessGame.underlineArray.join("  ");
+            document.getElementById("p-guessRemaining").innerHTML = "Number of Guesses Remaining : "+ wordGuessGame.guessRemaining;
+            document.getElementById("p-letterGuessed").innerHTML = "Letters Already Guessed : "+wordGuessGame.alreadyGuess.join("  ");
+    
+        },
+
+        matchLetters: function(str){
+            console.log("computerQ: "+computerQ);
+
+        },
+
+        playAudio: function(){
+            wordGuessGame.audio.play();
+        }
+
+        
+
+    }
+    
+    //
+    wordGuessGame.gameStart();
+
+    document.onkeyup = function(event) {
+        //only available char 
+        if(event.keyCode >= 65 && event.keyCode <= 90){
+            userGuess = event.key.toLowerCase(); 
+            wordGuessGame.matchLetters(userGuess);
+        }        
+        
+    }
+
+    </script>
+    
+</body>
+</html>
